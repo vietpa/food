@@ -1,0 +1,101 @@
+<div class="cart-header bg-success text-white mb-3">
+  <div class="container h1">
+    <a routerLink="/" class="text-white"><i class="fa fa-home"></i></a> |
+    Shopping Cart
+  </div>
+</div>
+<ng-container *ngIf="categories.length">
+  <div class="container">
+    <div class="category">
+      <div class="category__item card mb-3" *ngFor="let category of categories">
+        <div class="category__item-name card-header h2 bg-white">
+          {{ category }}
+        </div>
+        <div class="card-body">
+          <div class="cart">
+            <div
+              class="cart__item mb-3"
+              *ngFor="let item of cartItems$[category].items; let i = index"
+            >
+              <div class="cart__item-image me-3">
+                <img alt="" [src]="item.product.img" />
+              </div>
+              <div class="cart__item-info">
+                <div class="cart__item-name">
+                  <h1>{{ item.product.name }}</h1>
+                  Quantity: {{ item.quantity }}
+                </div>
+                <div class="d-flex">
+                  <div class="cart__item-discount h3 me-5">
+                    Discount: {{ item.discount * 100 }}%
+                  </div>
+                  <div class="cart__item-price h3">
+                    Price:
+                    <span class="text-danger">{{
+                      item.price | currency: "£":"symbol"
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ms-3 me-3 h3 d-none d-sm-block">|</div>
+              <a class="h3" (click)="removeItem(item)"
+                ><i class="fa fa-trash text-danger"></i
+              ></a>
+            </div>
+            <div class="cart-total text-end h1">
+              <div class="fs-5" *ngIf="cartItems$[category].discount">
+                Discount: <span class="text-danger">£5.00</span>
+              </div>
+              <div class="d-flex">
+                Total:&nbsp;
+                <span class="text-danger">{{
+                  cartItems$[category].price | currency: "£":"symbol"
+                }}</span>
+              </div>
+              <!-- <button class="btn btn-primary ms-3">Check out</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-5">
+        <div class="card-header bg-white d-flex justify-content-end">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Code..."
+              aria-label="keyword"
+              aria-describedby="basic-addon2"
+              #code
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-secondary"
+                type="button"
+                (click)="apply(code)"
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="cart-total text-end h1">
+            <div class="fs-5" *ngIf="appliedCode && price >= 100">
+              Discount: <span class="text-danger">£20.00</span>
+            </div>
+            <div class="d-flex">
+              Total:&nbsp;
+              <span class="text-danger">{{
+                (appliedCode && price >= 100 ? price - 20 : price)
+                  | currency: "£":"symbol"
+              }}</span>
+            </div>
+            <button class="btn btn-primary ms-3">Check out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

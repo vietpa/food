@@ -1,0 +1,38 @@
+<div class="header">
+  <div class="bg-success text-white">
+    <div class="container">
+      <div
+        class="header__top d-flex flex-row justify-content-center align-items-center"
+      >
+        <div class="search">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Products..."
+              aria-label="keyword"
+              aria-describedby="basic-addon2"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button">
+                <i class="fa fa-search mr-2"></i>
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="cart ms-3">
+          <a class="text-white" routerLink="/cart">
+            <i class="fa fa-shopping-cart fs-1" aria-hidden="true"></i>
+            <ng-container *ngIf="cartItems$ | async as items">
+              <span class="bg-danger text-white" *ngIf="items.length">{{
+                items.length
+              }}</span></ng-container
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="category"></div>
+</div>
